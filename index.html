@@ -1,0 +1,197 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+<title>Calculator</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<style>
+	#calculator {
+  width: 450px;
+  max-height: 320px;
+  margin: 50px auto 0 auto;
+  background-color: #e49800;
+  padding: 10px 10px 260px 10px;
+  border-radius: 5px;
+  border-bottom: 5px solid #42729B;
+}
+
+.result {
+  width: 305px;
+  height: 40px;
+  float: left;
+  line-height: 40px;
+  background-color: #fff;
+  color: #000;
+  margin: 5px;
+  text-align:right;
+  padding-right:5px;
+  overflow:hidden;
+}
+
+.result > p {
+  margin-left: 10px;
+}
+
+.clear, span {
+  height: 40px;
+  border-bottom: 3px solid grey;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  margin: 5px;
+}
+
+.clear {
+  width: 95px;
+  float: left;
+  background-color: #c0392b;
+  color: #fff;
+  border-color: #A63125;
+}
+
+span {
+  float: left;
+  width: 95px;
+}
+span:hover {
+  background-color: #6262eb;
+}
+
+	
+	
+</style>
+</head>
+<body>
+
+        <div id="calculator">
+	  <div class="result">
+    <p id="output"></p>
+</div>
+	<span class="cbutton clear">C</span>
+	<span class="cbutton">1</span>
+	<span class="cbutton">2</span>
+	<span class="cbutton">3</span>
+	<span class="cbutton">+</span>
+
+	<span class="cbutton">4</span>
+	<span class="cbutton">5</span>
+	<span class="cbutton">6</span>
+	<span class="cbutton">-</span>
+	<span class="cbutton">7</span>
+	<span class="cbutton">8</span>
+	<span class="cbutton">9</span>
+	<span class="cbutton">*</span>
+	<span class="cbutton">.</span>
+	<span class="cbutton">0</span>
+	<span class="cbutton">=</span>
+	<span class="cbutton">/</span>
+</div>
+</div>
+
+<script>
+var keys = document.getElementsByClassName("cbutton");
+// var for summing up the clcicked val
+var myCal = [""];
+// var for clearing the screen after C and =
+var myCom = false;
+// Switch for dedtcting operators
+var mySwitch = false;
+// var to change and replace operators
+var mySub;
+var len;
+var operator = ["+", "-", "/", "*"];
+var dot = ["."];
+var num = [0,1,2,3,4,5,6,7,8,9];
+var decimalAdded = false;
+
+for (var i = 0; i < keys.length; i++) {
+  keys[i].addEventListener("click", function() {
+  var input = document.querySelector('.result');
+    var inputVal = this.innerHTML;
+	var btnVal = this.innerHTML;
+    if (myCom || myCal == "0") {
+      myCom = false;
+      myCal = "";
+      len = myCal.length;
+	  console.log("len "+len);
+    }
+    if (len == 0 && myCal == "*") {
+      myCom = false;
+      myCal = "";
+    }
+    if (len == 0 && myCal == "/") {
+      myCom = false;
+      myCal = "";
+    }
+    if (inputVal == "=") {
+      inputVal = "";
+      if (operator.indexOf(output.innerHTML.slice(-1)) == -1) {
+        myCal = eval(myCal);
+        myCom = true;
+        //myCom = false;
+      }
+    } else if (inputVal == "C") {
+      myCal = 0;
+      myCom = true;
+    } else if(dot.includes(myCal[myCal.length-1])===true && inputVal==="."){
+      inputVal = "";
+	  console.log("mycal dot"+myCal);
+	}else if(myCal.lenght===1 && operator.includes(inputVal)===false){
+		myCal = myCal + inputVal;
+		console.log("opertaor false ");
+	}else if(operator.includes(myCal[myCal.length-1])===false){
+		myCal = myCal + inputVal;
+		console.log("not operator"+inputVal);
+	}else if(num.includes(Number(inputVal))){
+		myCal = myCal + inputVal;
+		console.log("number "+ myCal);
+	
+    }
+    if (mySwitch) {
+      mySwitch = false;
+      myCal = eval(myCal);
+    }
+/*    if (
+      inputVal == "+" ||
+      inputVal == "-" ||
+      inputVal == "*" ||
+      inputVal == "/"
+    ) {
+      mySub = inputVal;
+      if (operator.indexOf(output.innerHTML.slice(-1)) > -1) {
+        myCal = myCal.substring(0, myCal.length - 2);
+        myCal = myCal + mySub;
+        output.innerHTML = myCal;
+      }
+    } */
+    if (myCal === undefined) {
+      inputVal = "";
+      output.innerHTML = 0;
+      myCal = 0;
+    } else {
+      output.innerHTML = myCal;
+    }
+  });
+
+  $(function() {
+    $(".clear").click();
+  });
+}
+
+ 
+
+
+    </script>
+</body>
+</html>
